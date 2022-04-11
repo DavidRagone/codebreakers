@@ -1,0 +1,59 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <div id="formula0"></div>
+        <div id="formula1"></div>
+        <div id="formula2"></div>
+
+        <button onClick="location.reload()">Get new codebreaker</button>
+
+        <script>
+            const randomInt = (max, min) => {
+            if (min == undefined) { min = 0; }
+            let int = Math.ceil(Math.random() * max);
+            // TODO if min, fix distribution so still even (most will be min)
+            if (int < min) { int = min; }
+
+            return int;
+            }
+
+            let x = randomInt(20);
+            let y = randomInt(20);
+            let z = randomInt(20);
+
+            // TODO randomize starting https://dev.to/codebubb/how-to-shuffle-an-array-in-javascript-2ikj
+
+            // 3 (?) formulas
+            for (let formula = 0; formula < 3; formula++) {
+                let length = randomInt(5,3);
+                // TODO prefer floor to ceil above? Else over here (no zeros)
+                // TODO avoid repeating same formula;  a.every(item => b.includes(item)) && b.every(item => a.includes(item))
+                let numX = randomInt(length);
+                let numY = randomInt(length - numX);
+                let numZ = length - numX - numY;
+
+                let arr = [];
+                [[numX,"X"], [numY,"Y"], [numZ, "Z"]].forEach(el => {
+                    for (let n = 0; n < el[0]; n++) {
+                        arr = arr.concat(el[1])
+                    }
+                })
+                
+                let total = numX * x + numY * y + numZ * z;
+
+                let str = arr.join(" + ");
+                str = str.concat(` = ${total}`)
+                let el = document.getElementById(`formula${formula}`)
+                el.innerHTML = str;
+
+                {{/*  console.log(`${"X ".repeat(numX)} ${"Y ".repeat(numY)} ${"Z ".repeat(numZ)} = ${total}`);  */}}
+                
+                }
+
+            console.log("Answer:")
+            console.log(x,y,z)
+        </script>
+    </body>
+</html>
